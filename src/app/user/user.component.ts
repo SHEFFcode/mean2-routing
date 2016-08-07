@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ROUTER_DIRECTIVES, Router} from "@angular/router";
+import {ROUTER_DIRECTIVES, Router, ActivatedRoute} from "@angular/router";
+import {Subscription} from "rxjs";
+import {OnDestroy} from "@angular/core/esm";
 
 @Component({
   moduleId: module.id,
@@ -8,15 +10,25 @@ import {ROUTER_DIRECTIVES, Router} from "@angular/router";
   styleUrls: ['user.component.css'],
   directives: [ROUTER_DIRECTIVES]
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
+  private subscription: Subscription;
+  id: string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+    this.subscription = activatedRoute.params.subscribe(
+      (param: any) => this.id = param['id']
+    );
+  }
 
   ngOnInit() {
   }
 
   onNavigate() {
     this.router.navigate(['/']);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
