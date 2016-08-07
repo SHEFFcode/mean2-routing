@@ -3,7 +3,7 @@ import {HomeComponent} from "./home.component";
 import {provideRouter} from "@angular/router";
 
 const APP_ROUTES = [
-  {path: 'user', component: UserComponent},
+  {path: 'user/:id', component: UserComponent},
   {path: '', component: HomeComponent}
 ];
 
